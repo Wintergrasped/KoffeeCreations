@@ -1,0 +1,13 @@
+G04 Gerber job file.*
+%TF.FileFunction,JobInfo*%
+%TF.GenerationSoftware,Autodesk,EAGLE,9.1.3*%
+%TF.CreationDate,2020-03-05T03:51:45Z*%
+%TF.Part,Single*%
+%MOMM*%
+%TJ.B_Owner,Hunter Inman <inmanhunter@gmail.com>*%
+%TJ.B_ID,4L60E_Controller_SMD_CONNECTOR*%
+%TJ.B_LayerNum,2*%
+%TJ.B_Thickness,1.570000*%
+%TJ.B_Size_X,61.900000*%
+%TJ.B_Size_Y,57.648000*%
+M02*
