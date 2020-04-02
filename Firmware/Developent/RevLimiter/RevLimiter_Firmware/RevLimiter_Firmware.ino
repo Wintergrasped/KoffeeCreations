@@ -60,7 +60,7 @@ int ppr = Cylinders / 2;
 int tstep = 0;
 
 int coilPin = 8;
-int tstep = 4;
+int tstepPin = 4;
 int tach = 6;
 
 void setup() {
@@ -71,7 +71,7 @@ void setup() {
   }
   
   pinMode(coilPin, OUTPUT);
-  pinMode(tstep, INPUT_PULLUP);
+  pinMode(tstepPin, INPUT_PULLUP);
   Serial.begin(9600);
   digitalWrite(coilPin, HIGH);
 
@@ -95,7 +95,7 @@ void loop() {
   }
 
 
-  if (digitalRead(4) == LOW) {
+  if (digitalRead(tstepPin) == LOW) {
 
       tstep = 1;
     
@@ -155,7 +155,7 @@ if (debug) {
     
     }else{
 
-    digitalWrite(8, HIGH);
+    digitalWrite(coilPin, HIGH);
       
       }
 
