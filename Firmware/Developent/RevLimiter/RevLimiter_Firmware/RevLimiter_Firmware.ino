@@ -17,6 +17,7 @@ int spinThreshold = 15;         // Percentage of allowable wheel speed difrence 
 
 int tractioncontrol_holdtime = 50;  // How long (In Milliseconds) to hold coils off for traction control.
 
+bool invertedTach = false;
 
 //Advanced Settings
 int checktime = 500;           //How many MilliSeconds to wait before reading RPM again. too low can cause incomplete readings.
@@ -58,22 +59,41 @@ int ppr = Cylinders / 2;
 
 int tstep = 0;
 
+int coilPin = 8;
+int tstep = 4;
+int tach = 6;
+
 void setup() {
-  pinMode(6, INPUT);
-  pinMode(8, OUTPUT);
-  pinMode(11, INPUT_PULLUP);
+  if (invertedTach) {
+    pinMode(tach, INPUT);
+  }else{
+    pinMode(tach, INPUT_PULLUP);  
+  }
+  
+  pinMode(coilPin, OUTPUT);
+  pinMode(tstep, INPUT_PULLUP);
   Serial.begin(9600);
-  digitalWrite(8, HIGH);
+  digitalWrite(coilPin, HIGH);
 
 }
 
 void loop() {
 
   if (debug) {
-  Serial.println(pulseIn(11, HIGH));
+    if (invertedTach) {
+      Serial.println(pulseIn(tach, LOW));
+    }else{
+      Serial.println(pulseIn(tach, HIGH));
+    }
   }
   
-  pls = pulseIn(11, HIGH);
+  
+  if (invertedTach) {
+      pls = pulseIn(tach, LOW);
+  }else{
+      pls = pulseIn(tach, HIGH);
+  }
+
 
   if (digitalRead(4) == LOW) {
 
@@ -129,9 +149,9 @@ if (debug) {
 
   if (rpm >= RevLimit) {
 
-    digitalWrite(8, LOW);
+    digitalWrite(coilPin, LOW);
     delay(holdtime);
-    digitalWrite(8, HIGH);
+    digitalWrite(coilPin, HIGH);
     
     }else{
 
@@ -142,13 +162,13 @@ if (debug) {
       if (tstep == 1) {
         if (rpm >= TwoStepLimit) {
 
-           digitalWrite(8, LOW);
+           digitalWrite(coilPin, LOW);
            delay(twostep_holdtime);
-           digitalWrite(8, HIGH);
+           digitalWrite(coilPin, HIGH);
     
           }else{
 
-            digitalWrite(8, HIGH);
+            digitalWrite(coilPin, HIGH);
       
       }
         }
