@@ -62,6 +62,7 @@ int tstep = 0;
 int coilPin = 8;
 int tstepPin = 4;
 int tach = 6;
+int tstep_LED = 3;
 
 void setup() {
   if (invertedTach) {
@@ -98,10 +99,12 @@ void loop() {
   if (digitalRead(tstepPin) == LOW) {
 
       tstep = 1;
+      digitalWrite(tstep_LED, HIGH);
     
     }else{
       
       tstep = 0;
+      digitalWrite(tstep_LED, LOW);
       
       }
 if (debug) {
@@ -157,7 +160,7 @@ if (debug) {
 
     digitalWrite(coilPin, HIGH);
       
-      }
+    }
 
       if (tstep == 1) {
         if (rpm >= TwoStepLimit) {
@@ -166,13 +169,18 @@ if (debug) {
            delay(twostep_holdtime);
            digitalWrite(coilPin, HIGH);
     
-          }else{
+        }else{
 
-            digitalWrite(coilPin, HIGH);
+          digitalWrite(coilPin, HIGH);
       
-      }
         }
-
+      }
+// if (digitalRead(tstepPin), LOW) {
+//    digitalWrite(coilPin, LOW);
+//    delay(holdtime);
+//    digitalWrite(coilPin, HIGH);
+// }
+ 
   if (debug) {
     delay(1500);
   }else{
